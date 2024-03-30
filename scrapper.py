@@ -13,15 +13,28 @@ def description_scrapper(url:str):
     description = pattern.findall(str(soup))[0].replace('\\n','\n')
     return (description)
 
+def exercices_scrapper(desc:str):
+    lines = [line for line in desc.split('\n') if 'google' in line]
+    #[print(line) for line in lines]
+    ex  = next((line for line in lines if line.startswith('Exercices')), None)
+    return ex #Return the exercises pages
+    
+
 # Retrieve URLs of videos from playlist
 playlist = Playlist(URL_PLAYLIST)
-print('Number Of Videos In playlist: %s' % len(playlist.video_urls))
+#print('Number Of Videos In playlist: %s' % len(playlist.video_urls))
 
 urls = []
 descriptions = []
+exercises_urls = []
 for url in playlist:
     urls.append(url)
-    print(url)
+    #print(url)
     desc = description_scrapper(url)
     descriptions.append(desc)
-    print(desc)
+    ex = exercices_scrapper(desc)
+    if ex:
+        print(ex)
+    exercises_urls.append(ex)
+
+#[print(ex) for ex in exercises_urls]
