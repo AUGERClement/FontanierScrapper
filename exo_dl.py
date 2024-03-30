@@ -16,11 +16,17 @@ def get_ex_urls(file:str):
     #[print(ex) for ex in exos]
     return exos
 
+def dl_pdf(title, url):
+    #print(title, url)
+    output = "pdfs/" + title + ".pdf"
+    print(output)
+    gdown.download(url, output)
+    pass
+
 #ex_urls = get_ex_urls('Exercices.txt')
 lines = get_lines("Exercices.txt")
 #ex_lines = [line for line in lines if "http" in line] # Filter on lines with exercices
 ex_lines = [line.split('\t') for line in lines if "http" in line]
 """# Filter lines with exo and extract key data"""
-[print(line) for line in ex_lines]
-
-
+#[print(line) for line in ex_lines]
+[dl_pdf(title, url) for (title, url) in ex_lines]
